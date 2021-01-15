@@ -2,6 +2,8 @@ package ru.job4j.pooh.model;
 
 import net.jcip.annotations.Immutable;
 
+import java.util.Objects;
+
 /**
  * @author Egor Geraskin
  * @version 1.0
@@ -24,5 +26,47 @@ public final class Request {
         this.mode = mode;
         this.theme = theme;
         this.json = json;
+    }
+
+    public int getMethod() {
+        return method;
+    }
+
+    public int getMode() {
+        return mode;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public String getJson() {
+        return json;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Request request = (Request) o;
+        return method == request.method
+                && mode == request.mode
+                && Objects.equals(theme, request.theme)
+                && Objects.equals(json, request.json);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(method, mode, theme, json);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Request{%d, %d, %s, %s}",
+                method, mode, theme, json);
     }
 }

@@ -1,9 +1,6 @@
-package ru.job4j.pooh.model.util;
+package ru.job4j.pooh.util;
 
 import ru.job4j.pooh.model.Request;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Egor Geraskin
@@ -11,12 +8,21 @@ import java.util.stream.Stream;
  * @since 15.01.2021
  */
 public final class ParseRequest {
+    private final static ParseRequest INSTANCE = new ParseRequest();
+    
+    private ParseRequest() {
+    }
+
+    public static ParseRequest instOf() {
+        return INSTANCE;
+    }
+
     public Request parse(String request) {
         String[] parts = request.split("/");
         int method = parseMethod(parts[0]);
         int mode = parseMode(parts[1]);
         String theme = parts[2].trim().toLowerCase();
-        String json = parts[3].trim();
+        String json = parts.length >= 4 ? parts[3].trim() : "";
         return new Request(method, mode, theme, json);
     }
 
