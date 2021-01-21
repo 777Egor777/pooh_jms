@@ -16,9 +16,7 @@ public class Queue {
     private final Map<String, ConcurrentLinkedQueue<String>> queues = new ConcurrentHashMap<>();
 
     public void offer(String theme, String json) {
-        if (!queues.containsKey(theme)) {
-            queues.put(theme, new ConcurrentLinkedQueue<>());
-        }
+        queues.putIfAbsent(theme, new ConcurrentLinkedQueue<>());
         queues.get(theme).offer(json);
     }
 
